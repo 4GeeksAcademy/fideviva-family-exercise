@@ -26,18 +26,18 @@ def has_no_empty_params(rule):
 def generate_sitemap(app):
     links = []
     for rule in app.url_map.iter_rules():
-        # Filter out rules we can't navigate to in a browser
-        # and rules that require parameters
+        # Filter out rules we can't navigate to in a browser and rules that require parameters
         if "GET" in rule.methods and has_no_empty_params(rule):
             url = url_for(rule.endpoint, **(rule.defaults or {}))
             links.append(url)
-
-    links_html = "".join(["<li><a href='" + y + "'>" + y + "</a></li>" for y in links])
+    links_html = "".join(["<li><a href='" + link + "'>" + link + "</a></li>" for link in links])
     return """
         <div style="text-align: center;">
             <img src='https://github.com/breatheco-de/exercise-family-static-api/blob/master/rigo-baby.jpeg?raw=true' />
             <h1>Hello Rigo!!</h1>
             This is your api home, remember to specify a real endpoint path like: 
-            <ul style="text-align: left;">"""+links_html+ """
+            <ul style="text-align: left;">
+                """+links_html+ """
             </ul>
-        </div>"""
+        </div>
+        """
